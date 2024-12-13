@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { inter } from "@/app/ui/fonts"
-import { connectToMongoDB } from "@/lib/db";
 
 export const metadata: Metadata = {
   title: {
@@ -16,7 +15,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  connectToMongoDB()
   return (
     <html lang="en">
       <body

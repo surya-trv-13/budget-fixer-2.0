@@ -14,6 +14,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
+import { register } from "@/actions/register";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
 	email: z.string().min(2, {
@@ -39,6 +41,7 @@ const formSchema = z.object({
 });
 
 export default function RegisterForm() {
+	const router = useRouter();
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -50,10 +53,20 @@ export default function RegisterForm() {
 	});
 
 	// 2. Define a submit handler.
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		// Do something with the form values.
-		// ✅ This will be type-safe and validated.
-		console.log(values);
+	const onSubmit = async(values: z.infer<typeof formSchema>) => {
+		const r = await register({
+			email: values?.["email"],
+			password: values?.["password"],
+			name: values?.["name"],
+			image: "NA",
+			phone: "",
+			createdAt: new Date(),
+			updatedAt: new Date(), 
+		  });
+		  form.reset();
+		  if(!r?.error){
+			return router.push("/login");
+		  }
 	}
 
 	return (
@@ -68,7 +81,7 @@ export default function RegisterForm() {
 							<FormItem>
 								<FormLabel className="text-white">Name</FormLabel>
 								<FormControl>
-									<Input placeholder="Enter Name" {...field} />
+									<Input placeholder="Enter Name" {...field} autoComplete="off"/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -81,7 +94,7 @@ export default function RegisterForm() {
 							<FormItem>
 								<FormLabel className="text-white">Email</FormLabel>
 								<FormControl>
-									<Input placeholder="Enter Email" {...field} />
+									<Input placeholder="Enter Email" {...field} autoComplete="off" />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -94,7 +107,7 @@ export default function RegisterForm() {
 							<FormItem>
 								<FormLabel className="text-white">Password</FormLabel>
 								<FormControl>
-									<Input type="Password" placeholder="Enter Password" {...field} />
+									<Input type="Password" placeholder="Enter Password" {...field} autoComplete="off"/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -108,7 +121,7 @@ export default function RegisterForm() {
 							<FormItem>
 								<FormLabel className="text-white">Confirm Password</FormLabel>
 								<FormControl>
-									<Input type="Password" placeholder="Re Enter Password" {...field} />
+									<Input type="Password" placeholder="Re Enter Password" {...field} autoComplete="off"/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>
