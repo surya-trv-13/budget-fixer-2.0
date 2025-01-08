@@ -45,7 +45,7 @@ export default function LoginForm() {
 			redirect: false,
 		});
 		if (res?.error) {
-			console.log("Error Occurred")
+			console.log("Error Occurred", res?.error)
 		}
 		if (res?.ok) {
 			console.log("Login Successfully")
