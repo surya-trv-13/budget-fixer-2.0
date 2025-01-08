@@ -8,12 +8,14 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
+// import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
 	username: z.string().min(2, {
@@ -25,6 +27,7 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+	// const router = useRouter();
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -34,10 +37,20 @@ export default function LoginForm() {
 	});
 
 	// 2. Define a submit handler.
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		// Do something with the form values.
-		// ✅ This will be type-safe and validated.
+	async function onSubmit(values: z.infer<typeof formSchema>) {
 		console.log(values);
+		const res = await signIn("credentials", {
+			email: values?.username,
+			password: values?.password,
+			redirect: false,
+		});
+		if (res?.error) {
+			console.log("Error Occurred")
+		}
+		if (res?.ok) {
+			console.log("Login Successfully")
+			// return router.push("/");
+		}
 	}
 
 	return (
