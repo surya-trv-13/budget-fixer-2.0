@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
 	username: z.string().min(2, {
@@ -27,7 +27,7 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
-	// const router = useRouter();
+	const router = useRouter();
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -48,8 +48,8 @@ export default function LoginForm() {
 			console.log("Error Occurred", res?.error)
 		}
 		if (res?.ok) {
-			console.log("Login Successfully")
-			// return router.push("/");
+			console.log("Login Successfully", JSON.stringify(res))
+			return router.push("/");
 		}
 	}
 
