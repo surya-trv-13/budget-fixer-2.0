@@ -1,17 +1,14 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default async function SummaryCard() {
-	const session = await getServerSession(authOptions);
+	
 	return (
-		<Card className="rounded-none h-full bg-transparent border-none">
-			<CardHeader>
-				<CardTitle>{session?.user?.email}</CardTitle>
-				<CardDescription>{session?.user?.name}</CardDescription>
+		<Card className="rounded-none h-full bg-transparent border-none md:px-6 pb-4 shadow-none">
+			<CardHeader className="p-1 md:px-2 text-gray-400">
+				<CardTitle>Salary</CardTitle>
 			</CardHeader>
-			<CardContent>
-				<p>Card Content</p>
+			<CardContent className="text-cyan-50 p-2 pt-0">
+				<p className="md:text-3xl">Rs. 8000</p>
 			</CardContent>
 		</Card>
 	);
