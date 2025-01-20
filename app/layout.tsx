@@ -1,7 +1,10 @@
+"use client"
+
 import type { Metadata } from "next";
 import "./globals.css";
 import { inter } from "@/app/ui/fonts"
 import { Provider } from "./provider";
+import StoreProvider from "./StoreProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -18,13 +21,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Provider>
-        <body
-          className={`${inter.className} antialiased`}
-        >
-          {children}
-        </body>
-      </Provider>
+      <StoreProvider>
+        <Provider>
+          <body
+            className={`${inter.className} antialiased`}
+          >
+            {children}
+          </body>
+        </Provider>
+      </StoreProvider>
     </html>
   );
 }
