@@ -15,13 +15,14 @@ interface MonthPickerComponentProps {
 }
 
 const MonthPickerComponent: React.FC<MonthPickerComponentProps> = ({ selectedDate, onMonthSelect, label }) => {
+  const [calendarOpen, setCalendarOpen] = React.useState(false);
   return (
-    <Popover>
+    <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
           className={cn(
-            'w-[280px] justify-start text-left font-normal bg-slate-500',
+            'w-[280px] justify-start text-left font-normal mb-2 bg-gray-800 text-white hover:bg-slate-600 hover:text-white',
             !selectedDate && 'text-muted-foreground'
           )}
         >
@@ -30,7 +31,10 @@ const MonthPickerComponent: React.FC<MonthPickerComponentProps> = ({ selectedDat
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
-        <MonthPicker onMonthSelect={onMonthSelect} selectedMonth={selectedDate} />
+        <MonthPicker onMonthSelect={(date) => {
+          onMonthSelect(date);
+          setCalendarOpen(false);
+        }} selectedMonth={selectedDate} />
       </PopoverContent>
     </Popover>
   );

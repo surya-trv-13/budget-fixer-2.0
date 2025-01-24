@@ -9,7 +9,7 @@ export default function SummaryCard({
 }) {
 	
 	return (
-		<Card className="rounded-none h-full bg-transparent border-none md:px-6 pb-4 shadow-none">
+		<Card className="rounded-none h-full bg-transparent border-none md:px-2 pb-2 shadow-none">
 			<CardHeader className="p-1 md:px-2 text-gray-400">
 				<CardTitle>{title}</CardTitle>
 			</CardHeader>

@@ -14,6 +14,7 @@ export default function DashboardInfo() {
       };
 
     return <div className="h-[10%] md:h-[8%] px-8">
+      <div className="flex flex-col md:flex-row justify-between items-end h-full">
         <MonthPickerComponent selectedDate={firstPurposeDate}
           onMonthSelect={handleFirstPurposeSelect} label="Month"/>
         <div className="justify-center md:float-right flex h-[90%]">
@@ -23,6 +24,7 @@ export default function DashboardInfo() {
             <Separator className="w-[1px] h-[90%] bg-gray-400" />
             <SummaryCard title="Remaining" amount={78000} />
             
+        </div>
         </div>
         <Separator className="float-right bg-slate-400"/>
         
