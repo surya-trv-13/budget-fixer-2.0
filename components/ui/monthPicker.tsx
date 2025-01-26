@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
-import { MonthPicker } from '@/components/shadcn-ui-monthpicker/src/components/ui/monthpicker';
+import { MonthPicker } from '@/components/shadcn-monthpicker/src/components/ui/monthpicker';
 
 interface MonthPickerComponentProps {
   selectedDate: Date;
