@@ -16,34 +16,13 @@ import { Separator } from "@radix-ui/react-separator";
 import Link from "next/link";
 import { register } from "@/actions/register";
 import { useRouter } from "next/navigation";
+import { RegisterSchema } from "@/schemas/registerSchema";
 
-const formSchema = z.object({
-	email: z.string().min(2, {
-		message: "Username must be at least 2 characters.",
-	}),
-	password: z.string().min(8, {
-		message: "Password should be 8 character or more",
-	}),
-    name: z.string().min(5, {
-        message: "Name should be 5 character or more",
-    }),
-    confirmPassword: z.string().min(8, {
-        message: "Confirm Password should be 8 character or more",
-    })
-}).superRefine(( {confirmPassword, password}, ctx) => {
-    if (confirmPassword !== password) {
-        return ctx.addIssue({
-            code: 'custom',
-            message: 'Passwords do not match',
-            path: ['confirmPassword']
-        })
-    }
-});
 
 export default function RegisterForm() {
 	const router = useRouter();
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
+	const form = useForm<z.infer<typeof RegisterSchema>>({
+		resolver: zodResolver(RegisterSchema),
 		defaultValues: {
 			email: "",
 			password: "",
@@ -53,7 +32,7 @@ export default function RegisterForm() {
 	});
 
 	// 2. Define a submit handler.
-	const onSubmit = async(values: z.infer<typeof formSchema>) => {
+	const onSubmit = async(values: z.infer<typeof RegisterSchema>) => {
 		const r = await register({
 			email: values?.["email"],
 			password: values?.["password"],
